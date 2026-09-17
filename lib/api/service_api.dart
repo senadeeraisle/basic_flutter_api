@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:simple_flutter_api/models/product_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -83,4 +84,31 @@ class ApiService {
   //     throw Exception('error on adding the prduct');
   //   }
   // }
+
+  //method to update a product
+
+  Future<Product> editProduct(int id, Product product) async {
+    final String url = 'https://fakestoreapi.com/products/$id';
+    try {
+      final response = await http.put(
+        Uri.parse(url),
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(product.toJson()),
+      );
+      print('response status code ${response.statusCode}');
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final Product updatedProduct = Product.fromJson(
+          json.decode(response.body),
+        );
+        print(response.body);
+        return updatedProduct;
+      } else {
+        print('Error code ${response.statusCode}');
+        throw Exception('Error updating the product');
+      }
+    } catch (error) {
+      print('error updating product$error');
+      throw Exception('Error updating the product');
+    }
+  }
 }
