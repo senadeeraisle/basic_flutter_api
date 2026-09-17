@@ -61,7 +61,16 @@ class SingleProductPage extends StatelessWidget {
                           child: Text('Update'),
                         ),
                         const SizedBox(width: 20),
-                        ElevatedButton(onPressed: () {}, child: Text('Delete')),
+                        ElevatedButton(
+                          onPressed: () async {
+                            await apiService.deleteProduct(
+                              product.id!,
+                              context,
+                            );
+                            Navigator.pop(context);
+                          },
+                          child: Text('Delete'),
+                        ),
                       ],
                     ),
                   ],

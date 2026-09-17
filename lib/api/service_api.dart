@@ -111,4 +111,27 @@ class ApiService {
       throw Exception('Error updating the product');
     }
   }
+
+  //delete a product using api
+
+  Future<void> deleteProduct(int id, BuildContext context) async {
+    final String url = 'https://fakestoreapi.com/products/$id';
+
+    try {
+      final response = await http.delete(Uri.parse(url));
+      if (response.statusCode == 200) {
+        print('respone body: ${response.body}');
+        print('response status code: ${response.statusCode}');
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('product deleted successfully')));
+      } else {
+        print('response status code: ${response.body}');
+        Exception('error on deleting the product');
+      }
+    } catch (error) {
+      print('error on deleting the product: $error');
+      throw Exception('error on deleting the product');
+    }
+  }
 }

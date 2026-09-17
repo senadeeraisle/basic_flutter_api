@@ -176,9 +176,13 @@ class _UpdateProductPageState extends State<UpdateProductPage> {
                           image: image,
                           category: category,
                         );
-                        apiService
-                            .editProduct(id, product)
-                            .then((onValue) => Navigator.pop(context));
+                        try {
+                          apiService
+                              .editProduct(id, product)
+                              .then((onValue) => Navigator.pop(context));
+                        } catch (error) {
+                          print('error on adding product: $error');
+                        }
                       }
                     },
                     child: Text('Submit'),
